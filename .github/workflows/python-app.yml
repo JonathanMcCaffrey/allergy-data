@@ -1,19 +1,15 @@
-# This workflow will install Python dependencies, run tests and lint with a single version of Python
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+name: Pollen Report Timesnap
 
-name: Python application
+on: [push]
 
-# on: [push]
-
-on:
-  schedule:
+#on:
+ # schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron: "0 12 1/1 * *"
+  #  - cron: "0 12 1/1 * *"
 
 jobs:
   build:
     runs-on: macOS-latest
-
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python 3.8
@@ -46,11 +42,11 @@ jobs:
       - name: Send mail
         uses: dawidd6/action-send-mail@v2
         with:
-          server_address: smtp.gmail.com
-          server_port: 465
-          username: ${{secrets.EMAIL}}
-          password: ${{secrets.PASSWORD}}
+          server_address: smtp-mail.outlook.com
+          server_port: 587
+          username: ${{secrets.POLLEN_EMAIL}}
+          password: ${{secrets.POLLEN_PASSWORD}}
           subject: Pollen Report
           body: ${{join(steps.run_program.outputs.*, '\n')}}
-          to: ${{secrets.EMAIL}}
-          from: ${{secrets.EMAIL}}
+          to: ${{secrets.POLLEN_EMAIL}}
+          from: ${{secrets.POLLEN_EMAIL}}
