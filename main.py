@@ -16,6 +16,6 @@ with open('data.csv','a') as fd:
     fd.write(pollenReport)
 
 # calculate stuff
-sys.stdout.write("::set-output name=message::" + pollenReport)
+sys.stdout.write(pollenReport)
 sys.stdout.flush()
 sys.exit(0)
