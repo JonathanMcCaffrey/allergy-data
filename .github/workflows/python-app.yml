@@ -6,7 +6,7 @@ name: Python application
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '0 12 1/1 * *'
+    - cron: "0 12 1/1 * *"
 
 jobs:
   build:
@@ -33,14 +33,27 @@ jobs:
         env:
           PASSWORD: ${{ secrets.PASSWORD }}
           EMAIL: ${{ secrets.EMAIL }}
+        id: run_program
         run: |
-          pytest
+          python3 main.py
       - name: Commit files
         run: |
-         git config --local user.email "action@github.com"
-         git config --local user.name "GitHub Action"
-         git commit -m "Add changes" -a
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -m "Add changes" -a
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Send mail
+        uses: dawidd6/action-send-mail@v2
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{secrets.EMAIL}}
+          password: ${{secrets.PASSWORD}}
+          subject: Pollen Report
+          body: ${{join(steps.run_program.outputs.*, '\n')}}
+          to: ${{secrets.EMAIL}}
+          from: ${{secrets.EMAIL}}
