@@ -16,6 +16,7 @@ with open('data.csv','a') as fd:
     fd.write(pollenReport)
 
 # calculate stuff
+os.system( 'cls' )
 sys.stdout.write(pollenReport)
 sys.stdout.flush()
 sys.exit(0)
