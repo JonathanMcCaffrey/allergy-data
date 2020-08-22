@@ -33,6 +33,7 @@ jobs:
       - name: Test with pytest
         env:
           PASSWORD: ${{ secrets.PASSWORD }}
+          EMAIL: ${{ secrets.EMAIL }}
         run: |
           pytest
       - name: Commit files
