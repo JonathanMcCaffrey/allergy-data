@@ -43,9 +43,6 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Test
-        run: echo Should send email to ${{secrets.EMAIL}}
       - name: Send mail
         uses: dawidd6/action-send-mail@v2
         with:
