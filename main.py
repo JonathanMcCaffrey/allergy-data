@@ -14,6 +14,7 @@ pollenReport = "\n\""+ datetime.now().strftime("%m/%d/%Y") + "\",\"" +elem.text 
 driver.close()
 with open('data.csv','a') as fd:
     fd.write(pollenReport)
+
 # Get environment variables
 EMAIL = os.getenv('EMAIL')
 PASSWORD = os.environ.get('PASSWORD')
@@ -21,9 +22,7 @@ smtp_server = "smtp.gmail.com"
 port = 587  # For starttls
 # Create a secure SSL context
 context = ssl.create_default_context()
-message = """\
-Subject: Pollen Report
-""" + pollenReport
+
 # Try to log in to server and send email
 try:
     server = smtplib.SMTP(smtp_server,port)
@@ -38,8 +37,8 @@ except Exception as e:
     print(e)
 finally:
     server.quit() 
-    
+
 # calculate stuff
-sys.stdout.write(message)
+sys.stdout.write("::set-output " + pollenReport)
 sys.stdout.flush()
 sys.exit(0)
