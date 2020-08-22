@@ -4,6 +4,7 @@ from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from datetime import datetime
 import smtplib, ssl
+import os
 
 driver = webdriver.Chrome(ChromeDriverManager().install())
 
@@ -19,10 +20,12 @@ with open('data.csv','a') as fd:
     fd.write(pollenReport)
 
 
+# Get environment variables
+EMAIL = os.getenv('EMAIL')
+PASSWORD = os.environ.get('PASSWORD')
+
 smtp_server = "smtp.gmail.com"
 port = 587  # For starttls
-email = "jonmcc.0723@gmail.com"
-password = ""
 
 # Create a secure SSL context
 context = ssl.create_default_context()
@@ -38,9 +41,9 @@ try:
     server.ehlo() # Can be omitted
     server.starttls(context=context) # Secure the connection
     server.ehlo() # Can be omitted
-    server.login(email, password)
+    server.login(EMAIL, PASSWORD)
     # TODO: Send email here
-    server.sendmail(email, email, message)
+    server.sendmail(EMAIL, EMAIL, message)
 
 except Exception as e:
     # Print any error messages to stdout
