@@ -45,11 +45,11 @@ jobs:
       - name: Send mail
         uses: dawidd6/action-send-mail@v2
         with:
-          server_address: smtp.gmail.com
-          server_port: 465
-          username: ${{secrets.EMAIL}}
-          password: ${{secrets.PASSWORD}}
+          server_address: smtp-mail.outlook.com
+          server_port: 587
+          username: ${{secrets.POLLEN_EMAIL}}
+          password: ${{secrets.POLLEN_PASSWORD}}
           subject: Pollen Report
           body: ${{join(steps.run_program.outputs.*, '\n')}}
-          to: ${{secrets.EMAIL}}
-          from: ${{secrets.EMAIL}}
+          to: ${{secrets.POLLEN_EMAIL}}
+          from: ${{secrets.POLLEN_EMAIL}}
